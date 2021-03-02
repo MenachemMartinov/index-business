@@ -42,7 +42,7 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-router.put("/:id",auth, async (req, res) => {
+router.put("/:id", auth, async (req, res) => {
   try {
     const { error } = validateCard(req.body);
     if (error) {
@@ -79,7 +79,11 @@ router.put("/:id/upload-img", auth, async (req, res) => {
         _id: req.params.id,
         user_id: req.user._id,
       },
-      req.body
+      {
+        $push: {
+          ...req.body,
+        },
+      }
     );
     if (!card) {
       return res.status(400).send("card not found");
@@ -97,7 +101,7 @@ router.put("/:id/upload-img", auth, async (req, res) => {
   }
 });
 
-router.delete("/:id",auth, async (req, res) => {
+router.delete("/:id", auth, async (req, res) => {
   try {
     const { error } = validateCard(req.body);
     if (error) {

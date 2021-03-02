@@ -21,6 +21,7 @@ app.use(express.json());
 // app.use(bodyParser.urlencoded());
 
 app.use(express.static(process.cwd() + "/build"));
+app.use("/upload", express.static(path.relative(__dirname, "upload")));
 
 app.use("/api/users", require("./routes/users.route"));
 app.use("/api/messages", require("./routes/message.route"));
