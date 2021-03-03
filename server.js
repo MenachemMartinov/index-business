@@ -29,6 +29,8 @@ app.use("/api/cards", require("./routes/cards.route"));
 app.use("/api/categories", require("./routes/category.route"));
 app.use("/api/auth", require("./routes/auth.route"));
 app.use("/api/files", require("./routes/files.route"));
+app.use("/api/favorites", require("./routes/favorites.route"));
+
 
 app.get("*", (req, res) => {
   res.sendFile(process.cwd() + "/build/index.html");
