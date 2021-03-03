@@ -1,11 +1,13 @@
 const mongoose = require("mongoose");
 
 const favoritesSchema = new mongoose.Schema({
-  favoritesName: {
-    type: String,
-    required: true,
-    minlength: 2,
-    maxlength: 50,
+  user_id: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+  },
+  of_card: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Card",
   },
   createdAt: {
     type: Date,
