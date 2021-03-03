@@ -4,13 +4,18 @@ const { Favorites } = require("../models/favorites");
 const router = require("express").Router();
 
 router.post("/:id/new-favorites", auth, async (req, res) => {
-  let favorites = await new Favorites({
-    user_id: req.user._id,
-    of_card: req.params.id,
-  });
+  try {
+    let favorites = await new Favorites({
+      user_id: req.user._id,
+      of_card: req.params.id,
+    });
 
-  await favorites.save();
-  res.send(favorites);
+    await favorites.save();
+    res.send(favorites);
+  } catch (err) {
+    console.log(err);
+    res.status(500).send(err);
+  }
 });
 
 router.get("/all-favorites", auth, async (req, res) => {
