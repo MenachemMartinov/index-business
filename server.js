@@ -16,12 +16,14 @@ mongoose
   .then(() => console.log(`connected to mongo`))
   .catch((error) => console.error("Filed: could not connect to mongo", error));
 
+// use deferent a PORT
+app.use(cors());
 // allows to use JSON information
 app.use(express.json());
 /***
- * this is static path 
+ * this is static path
  */
-// this is static path to frontEnd of the site 
+// this is static path to frontEnd of the site
 app.use(express.static(process.cwd() + "/build"));
 // this is static path to get to the files
 app.use("/upload", express.static(path.relative(__dirname, "upload")));
@@ -44,6 +46,5 @@ app.get("*", (req, res) => {
 
 // this is the port what the server run
 const PORT = process.env.PORT || 3007;
-
 
 app.listen(PORT, () => console.log(`click http://localhost:${PORT}`));
