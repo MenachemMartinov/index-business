@@ -3,9 +3,6 @@ const { validateCategory, Category } = require("../models/category");
 
 const router = require("express").Router();
 
-/***
- * this route is create new category
- */
 router.post("/new-category", auth, async (req, res) => {
   const { error } = validateCategory(req.body);
   if (error) {
@@ -21,14 +18,39 @@ router.post("/new-category", auth, async (req, res) => {
   res.send(category);
 });
 
-/***
- * this route is to get all categories
- */
 router.get("/", async (req, res) => {
   const category = await Category.find();
   if (!category) {
     return res.status(404).send("no categories");
   }
+  res.send(category);
+});
+
+router.put("/:id", auth, async (req, res) => {
+  const { error } = validateCategory(req.body);
+  if (error) {
+    return res.status(400).send(error.details[0].message);
+  }
+
+  let category = await Category.findOneAndUpdate(
+    { _id: req.params.id },
+    req.body
+  );
+  if (!category) {
+    return res.status(404).send("no category");
+  }
+
+  category = await Category.findOne({ _id: req.params.id });
+
+  res.send(category);
+});
+
+router.delete("/:id", auth, async (req, res) => {
+  const category = await Category.findOneAndRemove({ _id: req.params.id });
+  if (!category) {
+    return res.status(404).send("no category");
+  }
+
   res.send(category);
 });
 
