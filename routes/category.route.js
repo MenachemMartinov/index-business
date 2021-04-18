@@ -40,7 +40,7 @@ router.put("/:id", auth, async (req, res) => {
     return res.status(404).send("no category");
   }
 
-  category = await Category.findOne({ _id: req.params.id });
+  category = await Category.findOne({ categoryName: req.params.id });
 
   res.send(category);
 });
