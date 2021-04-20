@@ -3,11 +3,14 @@ const mongoose = require("mongoose");
 const config = require("config");
 const path = require("path");
 const app = express();
-const cors = require("cors")
+const cors = require("cors");
+const dotenv = require('dotenv')
+
+const result = dotenv.config();
 
 // connected to Mongo DB
 mongoose
-  .connect(config.get("mongo"), {
+  .connect(process.env.DB_HOST, {
     useCreateIndex: true,
     useUnifiedTopology: true,
     useCreateIndex: true,

@@ -55,7 +55,7 @@ userSchema.methods.generateAuthToken = function () {
       business: this.business,
       manager: this.manager,
     },
-    config.get("jwtKey")
+    process.env.jwt_KEY
   );
   return token;
 };
