@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
 const Joi = require("@hapi/joi");
 const jwt = require("jsonwebtoken");
-const config = require("config");
 
 /***
  * this is a schema for user
@@ -55,7 +54,7 @@ userSchema.methods.generateAuthToken = function () {
       business: this.business,
       manager: this.manager,
     },
-    process.env.jwt_KEY
+    process.env.JWT_KEY
   );
   return token;
 };

@@ -1,5 +1,4 @@
 const jwt = require("jsonwebtoken");
-const config = require("config");
 
 /***
  * this a middleware to check if token is exist end if is invalid

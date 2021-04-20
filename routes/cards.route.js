@@ -1,4 +1,3 @@
-const c = require("config");
 const auth = require("../middlewares/auth.middleware");
 const { validateCard, Card, generateBizNumber } = require("../models/card");
 
