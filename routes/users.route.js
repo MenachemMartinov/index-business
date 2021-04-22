@@ -17,10 +17,8 @@ router.get("/user-details", authMiddleware, async (req, res) => {
  * this route is to create new user
  */
 router.post("/new-user", async (req, res) => {
-  console.log(req.body);
   const { error } = validateUser(req.body);
   if (error) {
-    console.log(error);
     return res.status(400).send(error.details[0].message);
   }
   try {

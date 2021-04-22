@@ -19,7 +19,6 @@ router.post("/new-card", auth, async (req, res) => {
   });
 
   await card.save();
-  console.log(card);
   res.send(card);
 });
 
@@ -120,8 +119,6 @@ router.put("/:id/upload-img", auth, async (req, res) => {
  */
 router.delete("/:id", auth, async (req, res) => {
   try {
-  
-
     const card = await Card.findOneAndDelete({
       _id: req.params.id,
       user_id: req.user._id,

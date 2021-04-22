@@ -49,7 +49,6 @@ router.put("/:id", auth, async (req, res) => {
       return res.status(404).send("no category");
     }
 
-    console.log(category);
     let updateCategory = await Category.findById(category._id);
 
     res.send(updateCategory);
