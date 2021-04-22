@@ -73,7 +73,6 @@ class NewCategoryComponent {
         };
     }
     onSubmit({ valid, value }) {
-        console.log(value);
         this.categoryService.newCategory(valid, value).subscribe((data) => {
             if (data === null || data === void 0 ? void 0 : data._id) {
                 this.router.navigate(['']);
@@ -239,9 +238,13 @@ __webpack_require__.r(__webpack_exports__);
 //   imgUrl: 'https://index-beitar.herokuapp.com/',
 // };
 const url = {
-    apiUrl: 'http://localhost:3007/api',
-    imgUrl: 'http://localhost:3007/',
+    apiUrl: '/api',
+    imgUrl: '/',
 };
+// const url = {
+//   apiUrl: 'http://localhost:3007/api',
+//   imgUrl: 'http://localhost:3007/',
+// };
 /* harmony default export */ __webpack_exports__["default"] = (url);
 
 
@@ -869,9 +872,6 @@ class EditCardImgComponent {
         this.message = '';
     }
     selectFile(event) {
-        console.log(event.target);
-        console.log(event.target.files);
-        console.log(this.uploadImages);
         this.selectedFiles = event.target.files;
     }
     upload() {
@@ -880,7 +880,6 @@ class EditCardImgComponent {
             const file = this.selectedFiles.item(0);
             if (file) {
                 this.currentFile = file;
-                console.log(this.currentFile);
                 this.filesService.NewImgUpload(this.currentFile).subscribe((event) => {
                     if (event.type === _angular_common_http__WEBPACK_IMPORTED_MODULE_0__["HttpEventType"].UploadProgress) {
                         this.progress = Math.round((100 * event.loaded) / event.total);
@@ -1008,7 +1007,6 @@ class SginUpbusinessComponent {
         };
     }
     onSubmit({ valid, value }) {
-        console.log(value);
         this.authService
             .signUp(valid, value)
             .subscribe((data) => {
@@ -1151,12 +1149,8 @@ class CardIdComponent {
         this.isTheSameUser = false;
     }
     fn() {
-        var _a, _b, _c;
-        console.log(this.card);
-        console.log((_a = this.card) === null || _a === void 0 ? void 0 : _a.user_id);
-        console.log(this.userId);
-        console.log(((_b = this.card) === null || _b === void 0 ? void 0 : _b.user_id) === this.userId);
-        if (((_c = this.card) === null || _c === void 0 ? void 0 : _c.user_id) === this.userId) {
+        var _a;
+        if (((_a = this.card) === null || _a === void 0 ? void 0 : _a.user_id) === this.userId) {
             this.isTheSameUser = true;
         }
     }
@@ -1454,7 +1448,7 @@ class FilesService {
         const formData = new FormData();
         console.log(file);
         formData.append('one-file', file, file.name);
-        console.log(JSON.stringify(formData));
+        console.log(formData);
         return this.http.post(`${this.apiUrl}/files/new-file`, formData, {
             reportProgress: true,
             responseType: 'json',
@@ -1683,11 +1677,9 @@ class NavBarComponent {
         this.userSearchCard = '';
     }
     searchCard(e) {
-        console.log(e);
         if ((e === null || e === void 0 ? void 0 : e.length) > 0) {
             let search = e === null || e === void 0 ? void 0 : e.split(' ');
             this.userSearchCardResult = this.cards.filter((card) => search.some((item) => card.bizName.toLowerCase().includes(item.toLowerCase())));
-            console.log(this.userSearchCardResult);
         }
         else {
             this.userSearchCardResult = null;
@@ -2146,7 +2138,6 @@ class EditCardComponent {
         activateRoute.params.subscribe((params) => (this.paramsId = params === null || params === void 0 ? void 0 : params.id));
     }
     onSubmit({ valid, value }) {
-        console.log(value);
         this.cardService
             .updateCard(this.paramsId, valid, value)
             .subscribe((data) => {
@@ -2371,7 +2362,6 @@ class CategoryIdComponent {
         this.activateRoute.params.subscribe((params) => {
             this.paramsId = params === null || params === void 0 ? void 0 : params.id;
             this.authService.getCurrentUser$.subscribe((user) => (this.user = user));
-            console.log(this.user);
             this.cardService
                 .getCards()
                 .subscribe((cards) => (this.cards = cards.filter((card) => card.bizCategory === (params === null || params === void 0 ? void 0 : params.id))));
@@ -2553,7 +2543,6 @@ class NewCardComponent {
         this.categories = null;
     }
     onSubmit({ valid, value }) {
-        console.log(value);
         this.cardService.newCard(valid, value).subscribe((data) => {
             if (data === null || data === void 0 ? void 0 : data._id) {
                 alert(`כרטיס של העסק "${data.bizName}" בקטגורית "${data.bizCategory}" נוצר בהצלחה`);
