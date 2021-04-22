@@ -10,11 +10,11 @@ module.exports = (req, res, next) => {
   }
 
   try {
-    const decoded = jwt.verify(token, process.env.jwt_KEY);
+    const decoded = jwt.verify(token, process.env.JWT_KEY);
     req.user = decoded;
     next();
-  } catch {
+  } catch(error) {
+    log(error)
     res.status(400).send("Invalid token");
   }
 };
-  

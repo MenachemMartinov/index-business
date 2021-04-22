@@ -60,7 +60,7 @@ router.put("/:id", auth, async (req, res) => {
       return res.status(400).send(error.details[0].message);
     }
 
-    const card = await Card.findOneAndUpdate(
+    let card = await Card.findOneAndUpdate(
       {
         _id: req.params.id,
         user_id: req.user._id,
@@ -120,10 +120,7 @@ router.put("/:id/upload-img", auth, async (req, res) => {
  */
 router.delete("/:id", auth, async (req, res) => {
   try {
-    const { error } = validateCard(req.body);
-    if (error) {
-      return res.status(400).send(error.details[0].message);
-    }
+  
 
     const card = await Card.findOneAndDelete({
       _id: req.params.id,

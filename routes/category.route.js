@@ -35,22 +35,28 @@ router.get("/:id", async (req, res) => {
 });
 
 router.put("/:id", auth, async (req, res) => {
-  const { error } = validateCategory(req.body);
-  if (error) {
-    return res.status(400).send(error.details[0].message);
+  try {
+    const { error } = validateCategory(req.body);
+    if (error) {
+      return res.status(400).send(error.details[0].message);
+    }
+
+    let category = await Category.findOneAndUpdate(
+      { _id: req.params.id },
+      req.body
+    );
+    if (!category) {
+      return res.status(404).send("no category");
+    }
+
+    console.log(category);
+    let updateCategory = await Category.findById(category._id);
+
+    res.send(updateCategory);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send(error);
   }
-
-  let category = await Category.findOneAndUpdate(
-    { _id: req.params.id },
-    req.body
-  );
-  if (!category) {
-    return res.status(404).send("no category");
-  }
-
-  category = await Category.findOne({ categoryName: req.params.id });
-
-  res.send(category);
 });
 
 router.delete("/:id", auth, async (req, res) => {
