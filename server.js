@@ -4,7 +4,6 @@ const path = require("path");
 const app = express();
 const cors = require("cors");
 
-const result = dotenv.config();
 
 // connected to Mongo DB
 mongoose
