@@ -1,4 +1,4 @@
-const { User, } = require("../models/user");
+const { User } = require("../models/user");
 const Joi = require("@hapi/joi");
 const bcrypt = require("bcrypt");
 const _ = require("lodash");
@@ -20,13 +20,13 @@ router.post("/", async (req, res) => {
     if (!user) {
       return res.status(400).send("User is not found");
     }
-
-    user.generateAuth;
     // validate password
     const isValidPassword = await bcrypt.compare(
       req.body.password,
       user.password
     );
+    console.log(user.password);
+    console.log(isValidPassword);
     if (!isValidPassword) {
       return res.status(400).send("Invalid email or password");
     }
