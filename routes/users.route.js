@@ -43,26 +43,30 @@ router.post("/new-user", async (req, res) => {
 /***
  * this route is to update user details
  */
-router.put("/:id", authMiddleware, async (req, res) => {
+router.put("/", authMiddleware, async (req, res) => {
   const { error } = validateUser(req.body);
   if (error) {
     return res.status(400).send(error.details[0].message);
   }
+  try {
+    let user = await User.findOneAndUpdate({ _id: req.user._id }, req.body);
+    if (!user) {
+      return res.status(400).send("email is exist chaise a oder email");
+    }
 
-  const user = await User.findOneAndUpdate({ _id: req.params.id }, req.body);
-  if (!user) {
-    return res.status(400).send("email is exist chaise a oder email");
+    user = await User.findOne({ _id: req.user._id });
+    res.send(user);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error);
   }
-
-  user = await User.findOne({ _id: req.params.id });
-  res.send(user);
 });
 
 /***
  * this route is to delete a user
  */
-router.delete("/:id", authMiddleware, async (req, res) => {
-  const user = await User.findOneAndRemove({ _id: req.params.id });
+router.delete("/", authMiddleware, async (req, res) => {
+  const user = await User.findOneAndRemove({ _id: req.user._id });
   if (!user) {
     return res.status(400).send("the user with given ID is not found");
   }

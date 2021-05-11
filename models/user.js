@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const Joi = require("@hapi/joi");
 const jwt = require("jsonwebtoken");
+const { array } = require("@hapi/joi");
 
 /***
  * this is a schema for user
@@ -21,7 +22,7 @@ const userSchema = new mongoose.Schema({
   },
   password: {
     type: String,
-    required: true,
+    required: false,
     minlength: 6,
     maxlength: 1024,
   },
@@ -36,6 +37,9 @@ const userSchema = new mongoose.Schema({
   manager: {
     type: Boolean,
     default: false,
+  },
+  favorites: {
+    type: Array,
   },
   createdAt: {
     type: Date,
@@ -68,7 +72,7 @@ function validateUser(user) {
   const schema = Joi.object({
     name: Joi.string().min(2).max(255).required(),
     email: Joi.string().min(6).max(255).required(),
-    password: Joi.string().min(6).max(1024).required(),
+    password: Joi.string().min(6).max(1024),
     user: Joi.boolean(),
     business: Joi.boolean(),
     manager: Joi.boolean(),
